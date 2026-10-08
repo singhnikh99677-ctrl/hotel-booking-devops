@@ -1,12 +1,15 @@
 services:
   mysql:
-    ports:
+    container_name: jenkins-hotel-mysql
+    ports: !override
       - "3307:3306"
 
   backend:
-    ports:
+    container_name: jenkins-hotel-backend
+    ports: !override
       - "5001:5000"
 
   frontend:
-    ports:
+    container_name: jenkins-hotel-frontend
+    ports: !override
       - "3001:80"
