@@ -7,6 +7,7 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 checkout scm
@@ -47,13 +48,13 @@ pipeline {
         }
 
         stage('Docker Compose Test') {
-    steps {
-        bat 'docker-compose -p jenkins-hotel-test -f docker-compose.yml -f docker-compose.jenkins.yml up -d'
-        bat 'timeout /t 15 /nobreak'
-        bat 'docker-compose -p jenkins-hotel-test -f docker-compose.yml -f docker-compose.jenkins.yml ps'
-        bat 'curl --fail http://localhost:5001/api/health'
-    }
-}
+            steps {
+                bat 'docker-compose -p jenkins-hotel-test -f docker-compose.yml -f docker-compose.jenkins.yml up -d'
+                bat 'timeout /t 15 /nobreak'
+                bat 'docker-compose -p jenkins-hotel-test -f docker-compose.yml -f docker-compose.jenkins.yml ps'
+                bat 'curl --fail http://localhost:5001/api/health'
+            }
+        }
 
         stage('Kubernetes Validate') {
             steps {
@@ -66,8 +67,9 @@ pipeline {
     }
 
     post {
-    always {
-        bat 'docker-compose -p jenkins-hotel-test -f docker-compose.yml -f docker-compose.jenkins.yml down --remove-orphans || exit /b 0'
-        echo 'Pipeline completed. Check console output for tests, Docker and Kubernetes validation.'
+        always {
+            bat 'docker-compose -p jenkins-hotel-test -f docker-compose.yml -f docker-compose.jenkins.yml down --remove-orphans || exit /b 0'
+            echo 'Pipeline completed. Check console output for tests, Docker and Kubernetes validation.'
+        }
     }
 }
