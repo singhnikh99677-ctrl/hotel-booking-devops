@@ -1,0 +1,12 @@
+services:
+  mysql:
+    ports:
+      - "3307:3306"
+
+  backend:
+    ports:
+      - "5001:5000"
+
+  frontend:
+    ports:
+      - "3001:80"
