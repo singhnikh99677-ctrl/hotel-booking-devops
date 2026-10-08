@@ -48,9 +48,9 @@ pipeline {
 
         stage('Docker Compose Test') {
             steps {
-                bat 'docker compose up -d'
+                bat 'docker-compose up -d'
                 bat 'timeout /t 15 /nobreak'
-                bat 'docker compose ps'
+                bat 'docker-compose ps'
                 bat 'curl --fail http://localhost:5000/api/health'
             }
         }
@@ -67,7 +67,7 @@ pipeline {
 
     post {
         always {
-            bat 'docker compose down --remove-orphans || exit /b 0'
+            bat 'docker-compose down --remove-orphans || exit /b 0'
             echo 'Pipeline completed. Check console output for tests, Docker and Kubernetes validation.'
         }
     }
