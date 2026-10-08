@@ -1,0 +1,43 @@
+# Simple blue deployment example for deployment-strategy demonstration.
+# Apply this after building hotel-backend:2.0.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hotel-backend-blue
+  namespace: hotel-booking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hotel-backend
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: hotel-backend
+        version: blue
+    spec:
+      containers:
+        - name: backend
+          image: hotel-backend:2.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PORT
+              value: "5000"
+            - name: DB_HOST
+              value: "mysql"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USER
+              value: "root"
+            - name: DB_PASSWORD
+              value: "root"
+            - name: DB_NAME
+              value: "hotel_booking"
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 5000
+            initialDelaySeconds: 10

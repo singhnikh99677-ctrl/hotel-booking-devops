@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StayEasy - Hotel Booking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Stay<span>Easy</span></div>
+    <nav>
+      <a href="#hotels">Hotels</a>
+      <a href="#bookings">My Bookings</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="small-title">HOTEL BOOKING SYSTEM</p>
+      <h1>Find a stay you will love.</h1>
+      <p>Search simple, comfortable hotels and book your stay in a few clicks.</p>
+
+      <div class="search-box">
+        <div class="field">
+          <label>Where</label>
+          <input id="searchPlace" type="text" placeholder="Mumbai, Goa, Delhi...">
+        </div>
+        <div class="field">
+          <label>Check-in</label>
+          <input id="checkIn" type="date">
+        </div>
+        <div class="field">
+          <label>Check-out</label>
+          <input id="checkOut" type="date">
+        </div>
+        <div class="field small-field">
+          <label>Guests</label>
+          <input id="guests" type="number" min="1" value="2">
+        </div>
+        <button id="searchBtn" class="primary-btn">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section id="hotels" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="small-title">POPULAR STAYS</p>
+          <h2>Choose your hotel</h2>
+        </div>
+        <span id="resultCount" class="result-count">3 hotels</span>
+      </div>
+
+      <div id="hotelList" class="hotel-grid"></div>
+      <p id="emptyMessage" class="empty hidden">No hotels found for this place.</p>
+    </section>
+
+    <section id="bookings" class="section booking-section">
+      <div class="section-heading">
+        <div>
+          <p class="small-title">YOUR TRIPS</p>
+          <h2>Recent bookings</h2>
+        </div>
+        <button id="refreshBookings" class="outline-btn">Refresh</button>
+      </div>
+      <div id="bookingList" class="booking-list"></div>
+    </section>
+  </main>
+
+  <div id="bookingModal" class="modal hidden">
+    <div class="modal-card">
+      <button id="closeModal" class="close-btn">&times;</button>
+      <p class="small-title">BOOK YOUR STAY</p>
+      <h2 id="modalHotelName">Hotel</h2>
+      <p id="modalHotelPlace" class="muted"></p>
+
+      <form id="bookingForm">
+        <input id="selectedHotelId" type="hidden">
+        <div class="two-col">
+          <div>
+            <label>Guest name</label>
+            <input id="guestName" required placeholder="Your name">
+          </div>
+          <div>
+            <label>Guests</label>
+            <input id="modalGuests" type="number" min="1" value="2" required>
+          </div>
+        </div>
+        <div class="two-col">
+          <div>
+            <label>Check-in</label>
+            <input id="modalCheckIn" type="date" required>
+          </div>
+          <div>
+            <label>Check-out</label>
+            <input id="modalCheckOut" type="date" required>
+          </div>
+        </div>
+        <div class="price-summary">
+          <span>Estimated total</span>
+          <strong id="modalTotal">₹0</strong>
+        </div>
+        <button class="primary-btn full-btn" type="submit">Confirm Booking</button>
+      </form>
+      <p id="bookingMessage" class="message"></p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
