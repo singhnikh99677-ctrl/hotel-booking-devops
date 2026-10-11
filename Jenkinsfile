@@ -50,7 +50,7 @@ pipeline {
         stage('Docker Compose Test') {
             steps {
                 bat 'docker-compose -p jenkins-hotel-test -f docker-compose.yml -f docker-compose.jenkins.yml up -d'
-                bat 'timeout /t 15 /nobreak'
+                sleep time: 15, unit: 'SECONDS'
                 bat 'docker-compose -p jenkins-hotel-test -f docker-compose.yml -f docker-compose.jenkins.yml ps'
                 bat 'curl --fail http://localhost:5001/api/health'
             }
