@@ -3,6 +3,11 @@ services:
     container_name: jenkins-hotel-mysql
     ports: !override
       - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   backend:
     container_name: jenkins-hotel-backend

@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -55,21 +56,12 @@ pipeline {
                 bat 'curl --fail http://localhost:5001/api/health'
             }
         }
-
-        stage('Kubernetes Validate') {
-            steps {
-                bat 'kubectl apply --dry-run=client -f k8s/namespace.yaml'
-                bat 'kubectl apply --dry-run=client -f k8s/mysql.yaml'
-                bat 'kubectl apply --dry-run=client -f k8s/backend.yaml'
-                bat 'kubectl apply --dry-run=client -f k8s/frontend.yaml'
-            }
-        }
     }
 
     post {
         always {
             bat 'docker-compose -p jenkins-hotel-test -f docker-compose.yml -f docker-compose.jenkins.yml down --remove-orphans || exit /b 0'
-            echo 'Pipeline completed. Check console output for tests, Docker and Kubernetes validation.'
+            echo 'Pipeline completed. Check console output for tests, Docker build and Compose validation.'
         }
     }
 }
